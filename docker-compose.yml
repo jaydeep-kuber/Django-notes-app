@@ -1,5 +1,10 @@
 version: "3.8"
 
+networks:
+  notes-app-nw:
+    driver: bridge
+    external: true
+
 services:
   nginx:
     build: ./nginx
@@ -51,6 +56,3 @@ services:
       start_period: 60s
     networks:
       - notes-app-nw
-
-networks:
-  notes-app-nw:

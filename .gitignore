@@ -2,7 +2,7 @@
 
 # ignore .vscode folder
 .vscode
-
+/data
 # dependencies
 /node_modules
 /.pnp
