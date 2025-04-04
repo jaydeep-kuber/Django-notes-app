@@ -18,10 +18,10 @@ def call() {
         echo "Docker installed successfully!"
     }
 
-    // Add Jenkins user to docker group for permissions
-    echo "Granting Docker permissions to the Jenkins user..."
-    sh '''
-        sudo usermod -aG docker $USER
-    '''
-    echo "Docker setup complete! Jenkins can now run Docker commands."
+    // // Add Jenkins user to docker group for permissions
+    // echo "Granting Docker permissions to the Jenkins user..."
+    // sh '''
+    //     sudo usermod -aG docker $USER
+    // '''
+    // echo "Docker setup complete! Jenkins can now run Docker commands."
 }
