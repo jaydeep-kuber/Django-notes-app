@@ -1,27 +1,23 @@
 def call() {
-    echo "Setting up Docker on the agent..."
+    echo "Installing Docker inside the agent container..."
 
-    // Check if Docker is installed
+    // Check if Docker is already installed
     def dockerCheck = sh(script: 'docker --version', returnStatus: true)
     if (dockerCheck == 0) {
-        echo "Docker is already installed!"
-    } else {
-        echo "Docker not found. Installing Docker..."
-
-        // Update package list and install Docker (Ubuntu/Debian example)
-        sh '''
-            sudo apt-get update -y
-            sudo apt-get install -y docker.io
-            sudo systemctl start docker
-            sudo systemctl enable docker
-        '''
-        echo "Docker installed successfully!"
+        echo "Docker is already installed in the container!"
+        return
     }
 
-    // Add Jenkins user to docker group for permissions
-    echo "Granting Docker permissions to the Jenkins user..."
+    // Install Docker inside the container (assuming Ubuntu-based image)
+    echo "Docker not found. Installing Docker..."
     sh '''
-        sudo usermod -aG docker $USER
+        apt-get update -y
+        apt-get install -y docker.io
+        systemctl start docker || echo "Systemctl not available, skipping service start (expected in container)"
+        echo "Docker installed successfully!"
     '''
-    echo "Docker setup complete! Jenkins can now run Docker commands."
+
+    // Verify installation
+    sh 'docker --version'
+    echo "Docker setup complete inside the agent container!"
 }
